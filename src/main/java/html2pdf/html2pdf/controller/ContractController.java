@@ -24,6 +24,7 @@
 
 package html2pdf.html2pdf.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.itextpdf.awt.geom.Rectangle2D;
 import com.itextpdf.text.DocumentException;
@@ -63,11 +64,8 @@ import java.io.IOException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author liuzh
@@ -259,13 +257,22 @@ public class ContractController {
         String dateString = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         map.put("DateString", dateString);
         ArrayList arrayList = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            Map map1 = new HashMap();
-            map1.put("id", i);
-            map1.put("agre", 18);
-            map1.put("name", "列表名字" + i);
-            map1.put("type", "类型" + i);
-            arrayList.add(map1);
+        map.put("contract_code", "HJ2354378755434");
+        map.put("num", 20);
+        map.put("money", 2000);
+        map.put("yf_company", "智小花（河南）贸易有限公司");
+        map.put("yf_name", "智小花");
+        map.put("jf_name", "赵总");
+        map.put("year", "23");
+        map.put("month", "03");
+        map.put("date", "19");
+        for (int i = 0; i < 3; i++) {
+            Map listMap = new HashMap();
+            listMap.put("id", i);
+            listMap.put("args", "芙丽芳丝" + RandomUtil.randomInt(100));
+            listMap.put("name", "列表名字" + i);
+            listMap.put("type", "类型" + i);
+            arrayList.add(listMap);
         }
         map.put("listArray", arrayList);
         return map;

@@ -50,7 +50,7 @@ public class TestRenderListener implements RenderListener {
     @Override
     public void renderText(TextRenderInfo renderInfo) {
         String text = renderInfo.getText();
-        if (text.length() > 0 && text.contains("甲方（盖章）")) {
+        if (text.length() > 0 && text.contains("乙方（盖章）")) {
             RectangularShape rectBase = renderInfo.getBaseline().getBoundingRectange();
             //获取文字下面的矩形
             Rectangle2D.Float rectAscen = renderInfo.getAscentLine().getBoundingRectange();

@@ -1,5 +1,6 @@
 package html2pdf.html2pdf.itext;
 
+import cn.hutool.core.util.StrUtil;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -33,6 +34,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static freemarker.template.Configuration.AUTO_DETECT_TAG_SYNTAX;
 
@@ -138,6 +142,31 @@ public class YtPDFComponent {
                 this.ytPDFWorkStreamInterface.onTransformError(e);
             }
         }
+    }
 
+    /**
+     * 替换字符串
+     *
+     * @param docxContent
+     * @param replaceMap
+     * @param regex
+     * @return
+     */
+    public static String replaceStrElementValue(String docxContent, Map<Integer, String> replaceMap, String regex) {
+        if (StrUtil.isNotBlank(docxContent) && Objects.nonNull(replaceMap) && !replaceMap.isEmpty()) {
+            Matcher matcher = Pattern.compile(regex).matcher(docxContent);
+            if (matcher.find(0)) {
+                matcher.reset();
+                StringBuffer sb = new StringBuffer();
+                Integer matcherStart = 1;
+                while (matcher.find()) {
+                    matcher.appendReplacement(sb, Matcher.quoteReplacement(StrUtil.blankToDefault(replaceMap.get(matcherStart), "")));
+                    matcherStart++;
+                }
+                matcher.appendTail(sb);
+                return sb.toString();
+            }
+        }
+        return docxContent;
     }
 }
